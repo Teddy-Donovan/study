@@ -1,0 +1,17 @@
+{
+  "name": "Study Resources",
+  "short_name": "Study",
+  "description": "Study packs, question bank, tracker, flashcards and timed exams for Electrical Machines, DSP and EDC.",
+  "id": "./",
+  "start_url": "./index.html#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f6f8",
+  "theme_color": "#1f2a37",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Resources</title>
+<meta name="description" content="Study packs, question bank, progress tracker, flashcards and timed exams for Electrical Machines, DSP and EDC.">
+<meta name="theme-color" content="#f4f6f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111418" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Study">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="app.css">
+<script>
+  /* theme before first paint */
+  try { var th = JSON.parse(localStorage.getItem('studyres.v1') || '{}').theme; if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th); } catch (e) {}
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'input'] },
+    startup: { typeset: false }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg-full.js" async id="mjx" onerror="var s=document.createElement('script');s.src='qb/vendor/tex-svg-full.js';s.async=true;document.head.appendChild(s)"></script>
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<div class="shell">
+  <nav class="side" aria-label="Main">
+    <div class="brand"><span class="logo" aria-hidden="true"></span><div><b>Study</b><span>Semester 2 · 2026</span></div></div>
+    <div class="navlist" id="sidenav"></div>
+    <div class="side-foot" id="sidefoot"></div>
+  </nav>
+  <div class="main">
+    <header class="appbar" id="appbar">
+      <div class="appbar-in">
+        <h1 id="vtitle">Today</h1>
+        <div class="appbar-act">
+          <a class="iconbtn" href="#search" aria-label="Search everything" id="searchbtn"></a>
+        </div>
+      </div>
+    </header>
+    <div id="exambar" class="exambar" hidden></div>
+    <main id="view" tabindex="-1"></main>
+  </div>
+</div>
+<nav class="tabbar" id="tabbar" aria-label="Tabs"></nav>
+<div id="sheet" class="sheet" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="sr-store.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
