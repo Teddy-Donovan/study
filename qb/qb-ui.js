@@ -332,8 +332,11 @@
         (q.error ? '' : '<div class="qbui-qfoot"><button type="button" class="qbui-btn pri" data-act="checkall">Check all</button><span class="qbui-score" aria-live="polite"></span></div>') +
       '</div>' +
     '</article>';
+    if (S.ink) { try { S.ink.detach(); } catch (e) {} S.ink = null; }
     main.innerHTML = h;
     var card = $(main, '.qbui-card-q');
+    // draw-on-question (app/ink.js)
+    if (window.SRInk && !q.error) { try { S.ink = window.SRInk.attach(card, flagId(q), { blocks: ':scope > *:not(.qbui-part), :scope > .qbui-part > *' }); } catch (e) {} }
     // flag
     var fb = $(main, '.qbui-flag');
     setFlagState(fb, S.sr.flags.has(flagId(q)));

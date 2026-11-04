@@ -872,13 +872,17 @@
     function stats() { var raw = SR.exportJSON(), o = JSON.parse(raw); $('#dstats').innerHTML = '<dt>Tracker entries</dt><dd>' + Object.keys(o.tracker || {}).length + '</dd><dt>Flags</dt><dd>' + Object.keys(o.flags || {}).length + '</dd><dt>Bank mistakes</dt><dd>' + (o.mistakes || []).length + '</dd><dt>Cards reviewed</dt><dd>' + Object.keys(o.cards || {}).length + '</dd><dt>Exam attempts</dt><dd>' + ((o.exam || {}).attempts || []).length + '</dd><dt>Size</dt><dd>' + (raw.length / 1024).toFixed(1) + ' KB</dd>'; }
     stats();
     $('#exp').onclick = function () {
-      var blob = new Blob([SR.exportJSON()], { type: 'application/json' }), a = document.createElement('a');
-      a.href = URL.createObjectURL(blob); a.download = 'study-data-' + todayISO() + '.json'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      toast('Exported. Save it to OneDrive.');
+      var inkP = window.SRInk ? window.SRInk.exportAll() : Promise.resolve({});
+      inkP.then(function (ink) {
+        var o = JSON.parse(SR.exportJSON()); if (ink && Object.keys(ink).length) o._ink = ink;
+        var blob = new Blob([JSON.stringify(o)], { type: 'application/json' }), a = document.createElement('a');
+        a.href = URL.createObjectURL(blob); a.download = 'study-data-' + todayISO() + '.json'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+        toast('Exported (including your drawings). Save it to OneDrive.');
+      });
     };
     $('#impf').onchange = function () {
       var f = this.files[0]; if (!f) return; var rd = new FileReader();
-      rd.onload = function () { try { JSON.parse(rd.result); SR.importJSON(rd.result); toast('Imported and merged'); stats(); updateBadges(); } catch (e) { toast('That file is not a Study export'); } };
+      rd.onload = function () { try { var o = JSON.parse(rd.result), ink = o._ink; delete o._ink; SR.importJSON(JSON.stringify(o)); if (ink && window.SRInk) window.SRInk.importAll(ink); toast('Imported and merged'); stats(); updateBadges(); } catch (e) { toast('That file is not a Study export'); } };
       rd.readAsText(f); this.value = '';
     };
     $('#rst').onclick = function () { confirmSheet('Reset everything?', 'This deletes your tracker, flags, mistake log, flashcard progress and exam history on this device. Export first if you might want it back.', 'Reset all data', function () { SR.reset(); document.documentElement.removeAttribute('data-theme'); toast('All data reset'); VIEWS.settings(); updateBadges(); }, true); };
