@@ -337,6 +337,13 @@
     var card = $(main, '.qbui-card-q');
     // draw-on-question (app/ink.js)
     if (window.SRInk && !q.error) { try { S.ink = window.SRInk.attach(card, flagId(q), { blocks: ':scope > *:not(.qbui-part), :scope > .qbui-part > *' }); } catch (e) {} }
+    // formulas needed (app/fx-panel.js + qb/fx-data.js)
+    if (window.SRFx && window.QB_FX && !q.error) {
+      var fxIds = QB_FX.map['qb:' + q.typeId + ':' + q.variant] || QB_FX.map['qb:' + q.typeId];
+      if (fxIds) window.SRFx.button(card, function (b) {
+        window.SRFx.show({ title: t.title, items: fxIds.map(function (id) { return QB_FX.lib[id]; }).filter(Boolean).map(function (f) { return { name: f.name, tex: f.tex, note: f.note || '' }; }) }, b);
+      });
+    }
     // flag
     var fb = $(main, '.qbui-flag');
     setFlagState(fb, S.sr.flags.has(flagId(q)));

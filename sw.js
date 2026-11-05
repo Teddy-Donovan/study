@@ -3,10 +3,10 @@
  * - Packs, PDFs, question bank, fonts, MathJax: stale-while-revalidate, cached on first visit.
  * - The page can pre-cache everything (Settings > Offline) into the same caches.
  */
-const VERSION = '20261105-100134';
+const VERSION = '20261105-144231';
 const SHELL = 'study-shell-' + VERSION;
 const C_PACKS = 'study-packs-v1', C_PDF = 'study-pdf-v1', C_RT = 'study-rt-v1';
-const SHELL_FILES = ['./', 'index.html', 'app.css', 'app.js', 'sr-store.js', 'ink.js', 'data.json', 'cards.json', 'search-index.json',
+const SHELL_FILES = ['./', 'index.html', 'app.css', 'app.js', 'sr-store.js', 'ink.js', 'fx-panel.js', 'data.json', 'cards.json', 'search-index.json',
   'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {

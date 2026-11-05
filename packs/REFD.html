@@ -3410,7 +3410,19 @@ window.addEventListener('beforeprint',()=>document.querySelectorAll('details').f
   var pm=(location.search.match(/[?&]pm=(\w)/)||[])[1];
   if(pm && pm!=='q') return;
   var pack=(document.title.split(' ')[0]||'').trim();
+  // exam papers written as h2 "Question N" blocks: wrap each into a card so it can be drawn on
+  function wrapH2(){
+    document.querySelectorAll('h2[data-fk="question"]').forEach(function(h){
+      if(h.closest('section.card')) return;
+      var nodes=[h], n=h.nextElementSibling;
+      while(n && !/^(H1|H2|HR)$/.test(n.tagName)){ nodes.push(n); n=n.nextElementSibling; }
+      if(nodes.some(function(x){ return x.matches && (x.matches('section.card[data-fk="question"]') || x.querySelector('section.card[data-fk="question"]')); })) return;
+      var s=document.createElement('section'); s.className='card question h2q'; s.setAttribute('data-fk','question'); s.setAttribute('data-fid',h.getAttribute('data-fid'));
+      h.parentNode.insertBefore(s,h); nodes.forEach(function(x){ s.appendChild(x); });
+    });
+  }
   function go(){
+    wrapH2();
     document.querySelectorAll('section.card[data-fk="question"]').forEach(function(el){
       if(el.parentElement && el.parentElement.closest('section.card[data-fk="question"]')) return;
       if(el._ink) return;

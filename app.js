@@ -387,6 +387,7 @@
   }
   function loadBankUI() {
     return loadBank().then(async function () {
+      if (qbHas('fx-data.js')) await loadScript('qb/fx-data.js').catch(function () {});
       if (!qbHas('qb-ui.js')) throw new Error('qb-ui.js is not in qb/ yet');
       if (qbHas('qb-ui.css')) loadCss('qb/qb-ui.css');
       await loadScript('qb/qb-ui.js');
